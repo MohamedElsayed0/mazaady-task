@@ -1,0 +1,33 @@
+.transparenBtn{
+    background-color: rgba(209, 6, 83, .2);
+    color: #D10653;
+    font-weight: 400;
+    border-radius: 3px;
+    min-width: 95px !important;
+}
+.transparenBtn:hover{
+    background-color: rgba(209, 6, 83, .4);
+    color: #D10653;
+}
+.transparenBtn:active{
+    background-color: rgba(209, 6, 83, .4) !important;
+    color: #D10653;
+}
+
+.gradient{
+    background: linear-gradient(to right, #9E0257 10%, #D10653 50%);
+    color: #fff
+}
+
+.circleFull{
+    background: linear-gradient(to right, #9E0257 10%, #D10653 50%);
+    color: #fff;
+    min-width: 38px !important;
+    height: 38px;
+    border-radius: 50% !important;
+}
+
+.gradient:hover,.circleFull:hover {
+    background: linear-gradient(to right, #9E0257 20%, #D10653 50%);
+    color: #fff;
+}
