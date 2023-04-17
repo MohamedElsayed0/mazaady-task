@@ -14,7 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mt-5">
+      <div className="container mt-5  text-dark">
         <div className="row m-0">
           <div className="col-lg-8 col-12">
             <div className="row m-0 bg-white p-3 shadow mb-4">
@@ -152,7 +152,7 @@ export default function Home() {
           </div>
 
           <div className="col-lg-4 col-12">
-            <div className="row m-0 bg-white p-3 shadow mb-4">
+            <div className="row m-0 bg-white p-3 shadow mb-4 text-dark">
               <h4 className="mb-3">المتنافسون</h4>
               <div className="my-2 d-flex align-items-center justify-content-between">
                 <Avatar name="اسم المزايد" number="13:59:00" />
