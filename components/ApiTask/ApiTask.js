@@ -25,8 +25,8 @@ const ApiTask = ({
   const [subCategoryId, setSubCategoryId] = useState(null);
   const [subCategoryChidren, setSubCategoryChidren] = useState([]);
 
-  const [dataTable,setDataTable] = useState({});
-
+  const [dataTable, setDataTable] = useState({});
+  const [closeModal, setCloseModal] = useState(true);
   const [initialValues] = useState({
     allCategories: "",
     subcategory: "",
@@ -60,7 +60,7 @@ const ApiTask = ({
   }, [Categories]);
 
   useEffect(() => {
-    if(SubCategoryChidren.data){
+    if (SubCategoryChidren.data) {
       setSubCategoryChidren(SubCategoryChidren.data.data);
     }
   }, [SubCategoryChidren]);
@@ -71,9 +71,10 @@ const ApiTask = ({
     const newData = {
       ...values,
       allCategories: allCategories.name,
-      subcategory:subcategory.name,
+      subcategory: subcategory.name,
     };
     setDataTable(newData);
+    setCloseModal(!closeModal);
   };
 
   return (
@@ -86,9 +87,12 @@ const ApiTask = ({
       >
         {({ values, handleBlur, handleChange, setFieldValue }) => {
           return (
-            <Form className="col-sm-7 col-12">
+            <Form className="col-12">
               <div className="my-4">
-                <label htmlFor="allCategories" className="mb-2 fw-bold">
+                <label
+                  htmlFor="allCategories"
+                  className="mb-2 fw-bold text-dark"
+                >
                   التصنيف الرئيسي <span style={{ color: "red" }}>*</span>
                 </label>
                 <select
@@ -120,7 +124,7 @@ const ApiTask = ({
               </div>
 
               <div className="my-4">
-                <label htmlFor="subcategory" className="mb-2 fw-bold">
+                <label htmlFor="subcategory" className="mb-2 fw-bold text-dark">
                   التصنيف الفرعي <span style={{ color: "red" }}>*</span>
                 </label>
                 <select
@@ -163,10 +167,10 @@ const ApiTask = ({
                     return (
                       <div className="my-4" key={item.id}>
                         {item.options?.length ? (
-                          <div className="my-4" key={item.id}>
+                          <div className="my-4">
                             <label
                               htmlFor="subcategory"
-                              className="mb-2 fw-bold"
+                              className="mb-2 fw-bold text-dark"
                             >
                               {item.name}
                             </label>
@@ -239,11 +243,70 @@ const ApiTask = ({
               <div className="mb-5">
                 <Button btnText="إرسال" type="submit" kind={"gradient"} />
               </div>
+              <div dir="ltr">
+                <div
+                  className={`modal fade ${closeModal ? "" : "show"}`}
+                  id="exampleModalCenter"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                  style={{ display: closeModal ? "none" : "block" }}
+                >
+                  <div
+                    className="modal-dialog modal-dialog-centered w-100"
+                    role="document"
+                  >
+                    <div className="modal-content w-100">
+                      <div className="modal-body w-100">
+                        {dataTable !== {} ? (
+                          <div className="col-12" dir="ltr">
+                            <table className="table table-bordered w-100">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Key</th>
+                                  <th scope="col">Value</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {Object.entries(dataTable).map(
+                                  ([key, value], index) => {
+                                    return (
+                                      <tr key={index}>
+                                        <th scope="row">{key}</th>
+                                        <th>{value}</th>
+                                      </tr>
+                                    );
+                                  }
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
+                          onClick={() => {
+                            setCloseModal(!closeModal);
+                          }}
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Form>
           );
         }}
       </Formik>
-      {dataTable !== {} ? (
+      {/* {dataTable !== {} ? (
         <div className="col-sm-5 col-12" dir="ltr">
           {Object.entries(dataTable).map(([key, value], index) => {
             return (
@@ -257,7 +320,7 @@ const ApiTask = ({
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 };
