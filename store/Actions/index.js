@@ -53,3 +53,28 @@ export const getSubCategory = (categoryId) => {
     }
   };
 };
+export const getOptionsChild = (optionId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: types.GET_OPTION_CHILD_LOADING,
+    });
+    try {
+      const res = await axios({
+        method: "GET",
+        url: `https://staging.mazaady.com/api/v1/get-options-child/${optionId}`,
+        headers: {
+          "private-key": "3%o8i}_;3D4bF]G5@22r2)Et1&mLJ4?$@+16",
+        },
+      });
+      dispatch({
+        type: types.GET_OPTION_CHILD_SUCSES,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: types.GET_OPTION_CHILD_ERROR,
+        payload: error.response ? error.response.data : error,
+      });
+    }
+  };
+};

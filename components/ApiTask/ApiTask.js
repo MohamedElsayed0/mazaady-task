@@ -1,21 +1,26 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Formik, Form,Field,ErrorMessage} from "formik";
-import { getAllCategories,getSubCategory } from '@/store/Actions';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
+import {
+  getAllCategories,
+  getSubCategory,
+  getOptionsChild,
+} from "@/store/Actions";
 import * as Yup from "yup";
-import { Button } from '../Buttons/Buttons';
+import { Button } from "../Buttons/Buttons";
 
 const Schema = Yup.object().shape({
   allCategories: Yup.string().required("Required"),
   subcategory: Yup.string().required("Required"),
 });
 
-
 const ApiTask = ({
   getAllCategories,
   Categories,
   getSubCategory,
   SubCategoryChidren,
+  getOptionsChild,
+  OptionsChild,
 }) => {
   const [loading, setLoading] = useState(false);
   const [allCat, setAllCat] = useState([]);
@@ -25,12 +30,14 @@ const ApiTask = ({
   const [subCategoryId, setSubCategoryId] = useState(null);
   const [subCategoryChidren, setSubCategoryChidren] = useState([]);
 
-  const [dataTable, setDataTable] = useState({});
+  const [dataTable, setDataTable] = useState(null);
   const [closeModal, setCloseModal] = useState(true);
+
   const [initialValues] = useState({
     allCategories: "",
     subcategory: "",
   });
+
   useEffect(() => {
     getAllCategories();
   }, []);
@@ -61,6 +68,7 @@ const ApiTask = ({
 
   useEffect(() => {
     if (SubCategoryChidren.data) {
+      setSubCategoryChidren([]);
       setSubCategoryChidren(SubCategoryChidren.data.data);
     }
   }, [SubCategoryChidren]);
@@ -73,12 +81,13 @@ const ApiTask = ({
       allCategories: allCategories.name,
       subcategory: subcategory.name,
     };
+    setDataTable(null);
     setDataTable(newData);
     setCloseModal(!closeModal);
   };
 
   return (
-    <div className="row">
+    <div className="row ">
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
@@ -107,6 +116,7 @@ const ApiTask = ({
                     setFieldValue("subcategory", "");
                     const fromStringToObject = JSON.parse(event.target.value);
                     setMainCategoryId(fromStringToObject.id);
+                    setDataTable(null);
                   }}
                 >
                   <option value="">اختر تصنيف</option>
@@ -137,6 +147,7 @@ const ApiTask = ({
                     handleChange(event);
                     const fromStringToObject = JSON.parse(event.target.value);
                     const categoryId = fromStringToObject.id;
+                    setDataTable(null);
                     setSubCategoryChidren([]);
                     setSubCategoryId(categoryId);
                   }}
@@ -166,76 +177,57 @@ const ApiTask = ({
                 ? subCategoryChidren.map((item, index) => {
                     return (
                       <div className="my-4" key={item.id}>
-                        {item.options?.length ? (
-                          <div className="my-4">
-                            <label
-                              htmlFor="subcategory"
-                              className="mb-2 fw-bold text-dark"
-                            >
-                              {item.name}
-                            </label>
-                            <select
-                              name={item.slug}
-                              className="input-select"
-                              defaultValue={""}
-                              onBlur={handleBlur}
-                              onChange={(event) => {
-                                handleChange(event);
-                                if (event.target.value === "Other") {
-                                  event.target.nextElementSibling.classList.remove(
-                                    "d-none"
-                                  );
-                                } else {
-                                  event.target.nextElementSibling.classList.add(
-                                    "d-none"
-                                  );
-                                }
-                              }}
-                            >
-                              <option value="" disabled>
-                                {item.name}{" "}
-                              </option>
-                              <option value="Other">Other</option>
+                        <div className="my-4">
+                          <label
+                            htmlFor="subcategory"
+                            className="mb-2 fw-bold text-dark"
+                          >
+                            {item.name}
+                          </label>
+                          <select
+                            name={item.slug}
+                            className="input-select"
+                            defaultValue={""}
+                            onBlur={handleBlur}
+                            onChange={(event) => {
+                              handleChange(event);
+                              if (event.target.value === "Other") {
+                                event.target.nextElementSibling.classList.remove(
+                                  "d-none"
+                                );
+                              } else {
+                                event.target.nextElementSibling.classList.add(
+                                  "d-none"
+                                );
+                              }
+                            }}
+                          >
+                            <option value="" disabled>
+                              {item.name}{" "}
+                            </option>
+                            <option value="Other">Other</option>
 
-                              {item.options.map((item) => (
-                                <option key={item.id} value={item.slug}>
+                            {item.options?.map((item) => {
+                              return (
+                                <option value={item.slug} key={item.id}>
                                   {item.name}
                                 </option>
-                              ))}
-                            </select>
-                            <div className="mt-2 d-none">
-                              <Field
-                                name={`${item.slug}-other-value`}
-                                defaultValue=""
-                                className="input-select"
-                                placeholder={"حدد هنا"}
-                                onBlur={handleBlur}
-                                onChange={(event) => {
-                                  handleChange(event);
-                                }}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="my-4">
-                            <label
-                              htmlFor="subcategory"
-                              className="mb-2 fw-bold"
-                            >
-                              {item.name}
-                            </label>
+                              );
+                            })}
+                          </select>
+                          <div className="mt-2 d-none">
                             <Field
-                              name={item.slug}
+                              name={`${item.slug}-other-value`}
                               defaultValue=""
                               className="input-select"
-                              placeholder={item.name}
+                              placeholder={"حدد هنا"}
                               onBlur={handleBlur}
                               onChange={(event) => {
                                 handleChange(event);
                               }}
                             />
                           </div>
-                        )}
+                        </div>
                       </div>
                     );
                   })
@@ -259,7 +251,7 @@ const ApiTask = ({
                   >
                     <div className="modal-content w-100">
                       <div className="modal-body w-100">
-                        {dataTable !== {} ? (
+                        {dataTable ? (
                           <div className="col-12" dir="ltr">
                             <table className="table table-bordered w-100">
                               <thead>
@@ -306,30 +298,18 @@ const ApiTask = ({
           );
         }}
       </Formik>
-      {/* {dataTable !== {} ? (
-        <div className="col-sm-5 col-12" dir="ltr">
-          {Object.entries(dataTable).map(([key, value], index) => {
-            return (
-              <div className="d-flex" key={index}>
-                <span>{key}</span>
-                <span className="mx-2">======</span>
-                <span>{value}</span>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        ""
-      )} */}
     </div>
   );
 };
-const mapStateToProps=(state)=>{
- return {
-   Categories: state.Categories,
-   SubCategoryChidren: state.SubCategory,
- };
-}
-export default connect(mapStateToProps, { getAllCategories, getSubCategory })(
-  ApiTask
-);
+const mapStateToProps = (state) => {
+  return {
+    Categories: state.Categories,
+    SubCategoryChidren: state.SubCategory,
+    OptionsChild: state.OptionsChild,
+  };
+};
+export default connect(mapStateToProps, {
+  getAllCategories,
+  getSubCategory,
+  getOptionsChild,
+})(ApiTask);
