@@ -134,6 +134,7 @@ a {
   padding: 6px;
   border-radius: 5px;
   border: 1px solid gray;
+  background-color: #FFF !important;
 }
 .input-select:focus {
   border: 1px solid indigo;

@@ -28,7 +28,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="col-12 p-0 ">
-                  <h4 className="mt-3 fw-bold">
+                  <h4 className="mt-3 fw-bold text-dark">
                     شراء مجموعة من السياريات من موديلات 1990{" "}
                   </h4>
                   <h6
@@ -68,7 +68,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className=" row m-0 bg-white p-3 shadow mb-5">
+            <div className=" row m-0 bg-white p-3 shadow mb-5 text-dark">
               <h4 className="mt-3 fw-bold">ارسال رسالة الي البائع</h4>
               <h6
                 className="mt-3"
@@ -92,22 +92,22 @@ export default function Home() {
               </div>
             </div>
 
-            <div className=" row m-0 bg-white p-3 shadow mb-5">
-              <h4 className="mt-3 fw-bold">تفاصيل المزاد</h4>
+            <div className=" row m-0 bg-white p-3 shadow mb-5 text-dark">
+              <h4 className="mt-3 fw-bold text-dark">تفاصيل المزاد</h4>
 
-              <div className="col-12 d-flex justify-content-between flex-wrap align-items-center">
+              <div className="col-12 d-flex justify-content-between flex-wrap align-items-center text-dark">
                 <div className="mt-3">
                   <p>
                     <span>
                       <i className="fas fa-map-marker-alt"></i>
                     </span>
-                    <span className="mx-2"> Egypt,Mansoura</span>
+                    <span className="mx-2 text-dark"> Egypt,Mansoura</span>
                   </p>
                   <p>
                     <span>
                       <i className="fas fa-dollar-sign"></i>
                     </span>
-                    <span className="mx-2"> البيع لأعلي سعر</span>
+                    <span className="mx-2 text-dark"> البيع لأعلي سعر</span>
                   </p>
                   <p style={{ color: "indigo" }}>
                     <span>
@@ -117,7 +117,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div>
-                  <p className="mb-1">200 قطعة</p>
+                  <p className="mb-1 text-dark">200 قطعة</p>
                   <p style={{ color: "#FEA515" }}>
                     <span>
                       <i className="fas fa-microphone"></i>
@@ -129,8 +129,8 @@ export default function Home() {
 
               <div className="col-12 my-2 border-bottom"></div>
               <div>
-                <h5 className="mt-3 fw-bold"> وصف</h5>
-                <p>
+                <h5 className="mt-3 fw-bold text-dark"> وصف</h5>
+                <p className="text-dark">
                   هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم
                   توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                   النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
@@ -140,8 +140,10 @@ export default function Home() {
 
               <div className="col-12 my-2 border-bottom"></div>
               <div>
-                <h5 className="mt-3 fw-bold">سياسة الاسترجاع والاستبدال </h5>
-                <p>
+                <h5 className="mt-3 fw-bold text-dark">
+                  سياسة الاسترجاع والاستبدال{" "}
+                </h5>
+                <p className="text-dark">
                   هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم
                   توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
                   النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف
